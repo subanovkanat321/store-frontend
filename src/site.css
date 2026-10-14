@@ -31,6 +31,8 @@ body {
 }
 
 a { color: var(--brand); }
+/* Одно кольцо фокуса на весь сайт — фирменное, как у кнопок, а не системное по умолчанию */
+:focus-visible { outline: 3px solid rgb(11 110 79 / 0.35); outline-offset: 2px; border-radius: 4px; }
 h1, h2 { line-height: 1.2; letter-spacing: -0.01em; }
 h2 { font-size: 18px; margin: 0 0 6px; }
 
@@ -79,7 +81,6 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .button:hover { background: var(--brand-dark); }
 .button:active { transform: scale(0.98); }
-.button:focus-visible { outline: 3px solid rgb(11 110 79 / 0.35); outline-offset: 2px; }
 .button--whatsapp { background: var(--whatsapp); }
 .button--whatsapp:hover { background: #17834a; }
 .button--secondary { color: var(--brand); background: #fff; border: 2px solid var(--brand); }
