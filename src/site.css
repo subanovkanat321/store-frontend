@@ -177,7 +177,8 @@ img { max-width: 100%; height: auto; display: block; }
 
 .steps { list-style: none; padding: 0; margin: 8px 0 20px; display: grid;
     grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 13px; color: var(--muted); }
-.steps__step { padding-top: 10px; border-top: 4px solid var(--border); }
+/* «Подтверждён» на узком телефоне переносится по слогам, а не налезает на соседний шаг */
+.steps__step { min-width: 0; padding-top: 10px; border-top: 4px solid var(--border); hyphens: auto; overflow-wrap: break-word; }
 .steps__step--done { border-color: var(--brand); color: var(--text); font-weight: 600; }
 
 .order-status { font-size: 18px; }
@@ -232,6 +233,10 @@ img { max-width: 100%; height: auto; display: block; }
 .report__notes p { margin: 0; }
 
 /* ---------- Широкие экраны ---------- */
+
+@media (max-width: 399px) {
+    .steps { font-size: 12px; }
+}
 
 @media (min-width: 720px) {
     .cards { grid-template-columns: repeat(3, 1fr); gap: 24px 16px; }
