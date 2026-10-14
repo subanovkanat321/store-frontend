@@ -19,6 +19,7 @@
 }
 
 * { box-sizing: border-box; }
+::selection { background: rgb(11 110 79 / 0.2); }
 
 body {
     margin: 0;
