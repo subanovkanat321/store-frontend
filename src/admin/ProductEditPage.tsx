@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link, useParams } from 'react-router'
 
 import { api, send, unwrap, type Schemas } from '../api/client'
 import { Field, FormError } from '../components/Field'
 import { errorMessage, fieldErrors, formLevelMessage } from '../components/errors'
+import { useRevealError } from '../components/useRevealError'
 import { useTitle } from '../lib/useTitle'
 import { PRODUCT_STATUS_LABEL } from './labels'
 
@@ -162,6 +163,8 @@ function ProductForm({ product, onSaved }: { product: Product; onSaved: (p: Prod
       ),
     onSuccess: onSaved,
   })
+  const formRef = useRef<HTMLFormElement>(null)
+  useRevealError(save.error, formRef)
   const errors = fieldErrors(save.error)
   const submit = (event: FormEvent) => {
     event.preventDefault()
@@ -169,7 +172,7 @@ function ProductForm({ product, onSaved }: { product: Product; onSaved: (p: Prod
   }
 
   return (
-    <form className="form" onSubmit={submit} noValidate>
+    <form className="form" onSubmit={submit} noValidate ref={formRef}>
       <FormError message={formLevelMessage(save.error)} />
       <Field label="Название" error={errors.title}>
         <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} maxLength={200} />

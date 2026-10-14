@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 
 import { api, unwrap, type Schemas } from '../api/client'
 import { Field, FormError } from '../components/Field'
 import { errorMessage, fieldErrors, formLevelMessage } from '../components/errors'
+import { useRevealError } from '../components/useRevealError'
 import { formatSom } from '../lib/format'
 import { useTitle } from '../lib/useTitle'
 import { campaignLabel } from './labels'
@@ -43,6 +44,8 @@ export function NewOrderPage() {
     onSuccess: (order) => navigate(`/admin/orders/${order.refCode}`),
   })
 
+  const formRef = useRef<HTMLFormElement>(null)
+  useRevealError(place.error, formRef)
   const errors = fieldErrors(place.error)
   const lookup = (event: FormEvent) => {
     event.preventDefault()
@@ -72,7 +75,7 @@ export function NewOrderPage() {
       <FormError message={lead.error ? errorMessage(lead.error) : undefined} />
       {lead.data && <p className="flash">Клик найден. Реклама: {campaignLabel(lead.data.utm)}</p>}
 
-      <form className="form" onSubmit={submit} noValidate>
+      <form className="form" onSubmit={submit} noValidate ref={formRef}>
         <FormError message={formLevelMessage(place.error)} />
         {errors.leadCode && <small className="form__error">{errors.leadCode}</small>}
         <Field label="Товар" error={errors.productSlug}>
