@@ -1,0 +1,1186 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "Store API",
+    "description" : "Деньги — целые сомы, время — ISO-8601 в UTC. Ошибки — Problem Details (RFC 9457). Запись — с CSRF: значение cookie XSRF-TOKEN в заголовке X-XSRF-TOKEN.",
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "paths" : {
+    "/api/v1/admin/products/{id}" : {
+      "get" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "get",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "update",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductChangeRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/whatsapp-leads" : {
+      "post" : {
+        "tags" : [ "tracking-api-controller" ],
+        "operationId" : "chat",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WhatsappChatRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WhatsappChat"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/visits" : {
+      "post" : {
+        "tags" : [ "tracking-api-controller" ],
+        "operationId" : "visit",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/VisitRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/orders" : {
+      "post" : {
+        "tags" : [ "order-api-controller" ],
+        "operationId" : "place",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PlaceOrderRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PlacedOrder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/products" : {
+      "get" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "list",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/AdminProduct"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "create",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewProductRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/products/{id}/publish" : {
+      "post" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "publish",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/products/{id}/photos" : {
+      "post" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "addPhoto",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "photo" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                },
+                "required" : [ "photo" ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "removePhoto",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "key",
+          "in" : "query",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/products/{id}/archive" : {
+      "post" : {
+        "tags" : [ "admin-products-api-controller" ],
+        "operationId" : "archive",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminProduct"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/orders" : {
+      "get" : {
+        "tags" : [ "admin-orders-api-controller" ],
+        "operationId" : "list_1",
+        "parameters" : [ {
+          "name" : "status",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "NEW",
+            "enum" : [ "NEW", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED" ]
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 100
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/AdminOrder"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admin-orders-api-controller" ],
+        "operationId" : "placeManual",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ManualOrderRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminOrder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/orders/{refCode}/{action}" : {
+      "post" : {
+        "tags" : [ "admin-orders-api-controller" ],
+        "operationId" : "change",
+        "parameters" : [ {
+          "name" : "refCode",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "action",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminOrder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/storefront" : {
+      "get" : {
+        "tags" : [ "storefront-api-controller" ],
+        "operationId" : "storefront",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Storefront"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/products" : {
+      "get" : {
+        "tags" : [ "storefront-api-controller" ],
+        "operationId" : "products",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductCard"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/products/{slug}" : {
+      "get" : {
+        "tags" : [ "storefront-api-controller" ],
+        "operationId" : "product",
+        "parameters" : [ {
+          "name" : "slug",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders/{publicCode}" : {
+      "get" : {
+        "tags" : [ "order-api-controller" ],
+        "operationId" : "status",
+        "parameters" : [ {
+          "name" : "publicCode",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublicOrder"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me" : {
+      "get" : {
+        "tags" : [ "auth-api-controller" ],
+        "operationId" : "me",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CurrentUser"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/whatsapp-leads/{code}" : {
+      "get" : {
+        "tags" : [ "admin-orders-api-controller" ],
+        "operationId" : "lead",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LeadDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/reports/campaigns" : {
+      "get" : {
+        "tags" : [ "campaign-report-api-controller" ],
+        "operationId" : "report",
+        "parameters" : [ {
+          "name" : "days",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 30
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CampaignReport"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/orders/{refCode}" : {
+      "get" : {
+        "tags" : [ "admin-orders-api-controller" ],
+        "operationId" : "get_1",
+        "parameters" : [ {
+          "name" : "refCode",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AdminOrder"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ProductChangeRequest" : {
+        "type" : "object",
+        "properties" : {
+          "version" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "title" : {
+            "type" : "string",
+            "maxLength" : 200,
+            "minLength" : 0
+          },
+          "description" : {
+            "type" : "string",
+            "maxLength" : 5000,
+            "minLength" : 0
+          },
+          "price" : {
+            "type" : "integer",
+            "format" : "int64",
+            "maximum" : 9999999,
+            "minimum" : 1
+          },
+          "stock" : {
+            "type" : "integer",
+            "format" : "int32",
+            "minimum" : 0
+          }
+        },
+        "required" : [ "price", "title" ]
+      },
+      "AdminPhoto" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string"
+          },
+          "url" : {
+            "type" : "string"
+          },
+          "width" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "height" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "required" : [ "height", "key", "url", "width" ]
+      },
+      "AdminProduct" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "slug" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "stock" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "DRAFT", "ACTIVE", "ARCHIVED" ]
+          },
+          "version" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "photos" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AdminPhoto"
+            }
+          }
+        },
+        "required" : [ "description", "id", "photos", "price", "slug", "status", "stock", "title", "version" ]
+      },
+      "WhatsappChatRequest" : {
+        "type" : "object",
+        "properties" : {
+          "productSlug" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        },
+        "required" : [ "productSlug" ]
+      },
+      "WhatsappChat" : {
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : [ "string", "null" ]
+          }
+        },
+        "required" : [ "code", "url" ]
+      },
+      "VisitRequest" : {
+        "type" : "object",
+        "properties" : {
+          "utmSource" : {
+            "type" : "string"
+          },
+          "utmMedium" : {
+            "type" : "string"
+          },
+          "utmCampaign" : {
+            "type" : "string"
+          },
+          "utmContent" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PlaceOrderRequest" : {
+        "type" : "object",
+        "properties" : {
+          "productSlug" : {
+            "type" : "string",
+            "minLength" : 1
+          },
+          "quantity" : {
+            "type" : "integer",
+            "format" : "int32",
+            "maximum" : 10,
+            "minimum" : 1
+          },
+          "name" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          },
+          "phone" : {
+            "type" : "string",
+            "minLength" : 1
+          },
+          "address" : {
+            "type" : "string",
+            "maxLength" : 500,
+            "minLength" : 0
+          },
+          "comment" : {
+            "type" : "string",
+            "maxLength" : 1000,
+            "minLength" : 0
+          },
+          "website" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "address", "name", "phone", "productSlug" ]
+      },
+      "PlacedOrder" : {
+        "type" : "object",
+        "properties" : {
+          "publicCode" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "publicCode" ]
+      },
+      "NewProductRequest" : {
+        "type" : "object",
+        "properties" : {
+          "slug" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0,
+            "pattern" : "[a-z0-9]+(-[a-z0-9]+)*"
+          },
+          "title" : {
+            "type" : "string",
+            "maxLength" : 200,
+            "minLength" : 0
+          },
+          "price" : {
+            "type" : "integer",
+            "format" : "int64",
+            "maximum" : 9999999,
+            "minimum" : 1
+          }
+        },
+        "required" : [ "price", "slug", "title" ]
+      },
+      "ManualOrderRequest" : {
+        "type" : "object",
+        "properties" : {
+          "leadCode" : {
+            "type" : "string"
+          },
+          "productSlug" : {
+            "type" : "string",
+            "minLength" : 1
+          },
+          "quantity" : {
+            "type" : "integer",
+            "format" : "int32",
+            "maximum" : 99,
+            "minimum" : 1
+          },
+          "name" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          },
+          "phone" : {
+            "type" : "string",
+            "minLength" : 1
+          },
+          "address" : {
+            "type" : "string",
+            "maxLength" : 500,
+            "minLength" : 0
+          },
+          "comment" : {
+            "type" : "string",
+            "maxLength" : 1000,
+            "minLength" : 0
+          },
+          "channel" : {
+            "type" : "string",
+            "enum" : [ "SITE", "WHATSAPP", "INSTAGRAM" ]
+          },
+          "preorder" : {
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "address", "channel", "name", "phone", "productSlug" ]
+      },
+      "AdminOrder" : {
+        "type" : "object",
+        "properties" : {
+          "refCode" : {
+            "type" : "string"
+          },
+          "publicCode" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "NEW", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED" ]
+          },
+          "channel" : {
+            "type" : "string",
+            "enum" : [ "SITE", "WHATSAPP", "INSTAGRAM" ]
+          },
+          "preorder" : {
+            "type" : "boolean"
+          },
+          "productTitle" : {
+            "type" : "string"
+          },
+          "quantity" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "unitPrice" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "total" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "customerName" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "comment" : {
+            "type" : [ "string", "null" ]
+          },
+          "utm" : {
+            "$ref" : "#/components/schemas/Utm"
+          }
+        },
+        "required" : [ "address", "channel", "comment", "createdAt", "customerName", "phone", "preorder", "productTitle", "publicCode", "quantity", "refCode", "status", "total", "unitPrice", "utm" ]
+      },
+      "Utm" : {
+        "type" : "object",
+        "properties" : {
+          "source" : {
+            "type" : [ "string", "null" ]
+          },
+          "medium" : {
+            "type" : [ "string", "null" ]
+          },
+          "campaign" : {
+            "type" : [ "string", "null" ]
+          },
+          "content" : {
+            "type" : [ "string", "null" ]
+          }
+        },
+        "required" : [ "campaign", "content", "medium", "source" ]
+      },
+      "Storefront" : {
+        "type" : "object",
+        "properties" : {
+          "brandName" : {
+            "type" : "string"
+          },
+          "tagline" : {
+            "type" : "string"
+          },
+          "whatsappUrl" : {
+            "type" : "string"
+          },
+          "terms" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/Terms"
+            }, {
+              "type" : "null"
+            } ]
+          }
+        },
+        "required" : [ "brandName", "tagline", "terms", "whatsappUrl" ]
+      },
+      "Terms" : {
+        "type" : "object",
+        "properties" : {
+          "delivery" : {
+            "type" : "string"
+          },
+          "payment" : {
+            "type" : "string"
+          },
+          "returns" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "delivery", "payment", "returns" ]
+      },
+      "PhotoLink" : {
+        "type" : "object",
+        "properties" : {
+          "src" : {
+            "type" : "string"
+          },
+          "srcset" : {
+            "type" : "string"
+          },
+          "width" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "height" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "required" : [ "height", "src", "srcset", "width" ]
+      },
+      "ProductCard" : {
+        "type" : "object",
+        "properties" : {
+          "slug" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "inStock" : {
+            "type" : "boolean"
+          },
+          "photo" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/PhotoLink"
+            }, {
+              "type" : "null"
+            } ]
+          }
+        },
+        "required" : [ "inStock", "photo", "price", "slug", "title" ]
+      },
+      "ProductDetails" : {
+        "type" : "object",
+        "properties" : {
+          "slug" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "inStock" : {
+            "type" : "boolean"
+          },
+          "photos" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PhotoLink"
+            }
+          }
+        },
+        "required" : [ "description", "inStock", "photos", "price", "slug", "title" ]
+      },
+      "PublicOrder" : {
+        "type" : "object",
+        "properties" : {
+          "publicCode" : {
+            "type" : "string"
+          },
+          "refCode" : {
+            "type" : "string"
+          },
+          "productTitle" : {
+            "type" : "string"
+          },
+          "quantity" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "unitPrice" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "total" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "NEW", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED" ]
+          },
+          "preorder" : {
+            "type" : "boolean"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "required" : [ "createdAt", "preorder", "productTitle", "publicCode", "quantity", "refCode", "status", "total", "unitPrice" ]
+      },
+      "CurrentUser" : {
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "username" ]
+      },
+      "LeadDetails" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "productSlug" : {
+            "type" : [ "string", "null" ]
+          },
+          "productTitle" : {
+            "type" : [ "string", "null" ]
+          },
+          "utm" : {
+            "$ref" : "#/components/schemas/Utm"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "required" : [ "code", "createdAt", "productSlug", "productTitle", "utm" ]
+      },
+      "CampaignReport" : {
+        "type" : "object",
+        "properties" : {
+          "days" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "enoughConfirmed" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "rows" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CampaignRow"
+            }
+          },
+          "total" : {
+            "$ref" : "#/components/schemas/CampaignRow"
+          }
+        },
+        "required" : [ "days", "enoughConfirmed", "rows", "total" ]
+      },
+      "CampaignRow" : {
+        "type" : "object",
+        "properties" : {
+          "source" : {
+            "type" : [ "string", "null" ]
+          },
+          "campaign" : {
+            "type" : [ "string", "null" ]
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "clicks" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "orders" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "fromSite" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "confirmed" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "cancelled" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "revenue" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "enough" : {
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "campaign", "cancelled", "clicks", "confirmed", "enough", "fromSite", "label", "orders", "revenue", "source" ]
+      }
+    }
+  }
+}
