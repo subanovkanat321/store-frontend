@@ -69,7 +69,9 @@ img { max-width: 100%; height: auto; display: block; }
 .site-footer__inner { display: block; padding: 24px 16px 32px; }
 .site-footer__inner p { margin: 0 0 6px; }
 .site-footer__brand { font-weight: 700; color: var(--text); }
-.site-footer__links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.site-footer__links { display: flex; flex-wrap: wrap; gap: 0 16px; }
+/* Ссылки подвала — палец попадает с первого раза (зона нажатия 44 px) */
+.site-footer__links a { display: inline-block; padding: 11px 0; }
 
 /* ---------- Кнопки ---------- */
 
