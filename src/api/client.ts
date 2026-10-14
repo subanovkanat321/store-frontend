@@ -80,7 +80,9 @@ export function toApiError(status: number, body: unknown): ApiError {
       fieldErrors[error.field] ??= error.message
     }
   }
-  const detail = typeof problem.detail === 'string' ? problem.detail : `Ошибка сервера (${status})`
+  // 413 отдаёт nginx или Tomcat, ещё до приложения, — без JSON
+  const fallback = status === 413 ? 'Файл слишком большой: загрузите фото до 10 МБ' : `Ошибка сервера (${status})`
+  const detail = typeof problem.detail === 'string' ? problem.detail : fallback
   return new ApiError(status, detail, fieldErrors)
 }
 
