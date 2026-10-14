@@ -56,3 +56,9 @@ test('Problem Details превращается в ApiError с ошибками �
   expect((error as ApiError).status).toBe(422)
   expect((error as ApiError).fieldErrors).toEqual({ phone: 'Номер Кыргызстана' })
 })
+
+test('413 без JSON — понятный текст про размер файла', async () => {
+  const { toApiError } = await import('./client')
+
+  expect(toApiError(413, null).message).toBe('Файл слишком большой: загрузите фото до 10 МБ')
+})
