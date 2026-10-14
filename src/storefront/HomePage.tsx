@@ -14,7 +14,7 @@ export function HomePage() {
   const products = useQuery({ queryKey: ['products'], queryFn: () => unwrap(api.GET('/api/v1/products')) })
 
   return (
-    <main className="page">
+    <main className="page page--catalog">
       <section className="hero">
         <h1>Каталог</h1>
         <p>{storefront?.tagline ?? ' '}</p>
@@ -30,7 +30,7 @@ export function HomePage() {
                   <img
                     src={product.photo.src}
                     srcSet={product.photo.srcset}
-                    sizes="(max-width: 640px) 50vw, 300px"
+                    sizes="(max-width: 719px) 50vw, 250px"
                     width={product.photo.width}
                     height={product.photo.height}
                     loading="lazy"

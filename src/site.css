@@ -54,6 +54,8 @@ img { max-width: 100%; height: auto; display: block; }
 
 .page { max-width: 640px; margin: 0 auto; padding: 16px; }
 .page--wide { max-width: 960px; }
+/* Каталог по ширине шапки: края витрины совпадают с логотипом и подвалом */
+.page--catalog { max-width: 1040px; }
 .page--product { padding-top: 0; }
 
 .site-footer { margin-top: 32px; background: var(--surface); color: var(--muted); font-size: 14px; }
@@ -237,6 +239,7 @@ img { max-width: 100%; height: auto; display: block; }
 @media (min-width: 900px) {
     .page--product { max-width: 1040px; }
     .product { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .cards { grid-template-columns: repeat(4, 1fr); }
     .product__media { position: sticky; top: 72px; }
     .product__body { padding-top: 16px; }
     .product__title { font-size: 28px; }
