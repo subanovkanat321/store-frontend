@@ -1,10 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 
 import { api, unwrap } from '../api/client'
 import { Field, FormError } from '../components/Field'
 import { fieldErrors, formLevelMessage } from '../components/errors'
+import { useRevealError } from '../components/useRevealError'
 import { useTitle } from '../lib/useTitle'
 
 export function NewProductPage() {
@@ -20,6 +21,8 @@ export function NewProductPage() {
       ),
     onSuccess: (product) => navigate(`/admin/products/${product.id}`, { replace: true }),
   })
+  const formRef = useRef<HTMLFormElement>(null)
+  useRevealError(create.error, formRef)
   const errors = fieldErrors(create.error)
   const submit = (event: FormEvent) => {
     event.preventDefault()
@@ -32,7 +35,7 @@ export function NewProductPage() {
         <Link to="/admin/products">← К товарам</Link>
       </p>
       <h1>Новый товар</h1>
-      <form className="form" onSubmit={submit} noValidate>
+      <form className="form" onSubmit={submit} noValidate ref={formRef}>
         <FormError message={formLevelMessage(create.error)} />
         <Field label="Адрес на сайте (потом не меняется: он в рекламных ссылках)" error={errors.slug}>
           <input

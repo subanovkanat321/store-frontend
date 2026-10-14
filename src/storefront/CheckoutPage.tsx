@@ -1,10 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 
 import { api, unwrap } from '../api/client'
 import { Field, FormError } from '../components/Field'
 import { errorMessage, fieldErrors, formLevelMessage, isNotFound } from '../components/errors'
+import { useRevealError } from '../components/useRevealError'
 import { formatSom } from '../lib/format'
 import { useTitle } from '../lib/useTitle'
 import { NotFoundPage } from './NotFoundPage'
@@ -30,6 +31,9 @@ export function CheckoutPage() {
     },
   })
 
+  const page = useRef<HTMLElement>(null)
+  useRevealError(place.error, page)
+
   if (isNotFound(product.error)) {
     return <NotFoundPage />
   }
@@ -52,7 +56,7 @@ export function CheckoutPage() {
   }
 
   return (
-    <main className="page">
+    <main className="page" ref={page}>
       <p>
         <Link to={`/p/${p.slug}`}>← К товару</Link>
       </p>
