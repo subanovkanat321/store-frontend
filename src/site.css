@@ -178,9 +178,9 @@ img { max-width: 100%; height: auto; display: block; }
 .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
 .steps { list-style: none; padding: 0; margin: 8px 0 20px; display: grid;
-    grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 13px; color: var(--muted); }
-/* «Подтверждён» на узком телефоне переносится по слогам, а не налезает на соседний шаг */
-.steps__step { min-width: 0; padding-top: 10px; border-top: 4px solid var(--border); hyphens: auto; overflow-wrap: break-word; }
+    /* Шаги поровну, но не уже своего слова: «Подтверждён» на узком телефоне не налезает на «Отправлен» */
+    grid-template-columns: repeat(4, minmax(min-content, 1fr)); gap: 6px 12px; font-size: 13px; color: var(--muted); }
+.steps__step { padding-top: 10px; border-top: 4px solid var(--border); }
 .steps__step--done { border-color: var(--brand); color: var(--text); font-weight: 600; }
 
 .order-status { font-size: 18px; }
@@ -236,8 +236,9 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ---------- Широкие экраны ---------- */
 
-@media (max-width: 399px) {
-    .steps { font-size: 12px; }
+/* Самые узкие телефоны (320 px): шаги мельче, чтобы все четыре влезли в строку */
+@media (max-width: 359px) {
+    .steps { font-size: 12px; column-gap: 8px; }
 }
 
 @media (min-width: 720px) {
